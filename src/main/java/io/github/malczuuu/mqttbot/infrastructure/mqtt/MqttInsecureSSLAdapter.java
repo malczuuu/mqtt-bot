@@ -1,4 +1,4 @@
-package io.github.malczuuu.iot.bot.mqtt.configuration;
+package io.github.malczuuu.mqttbot.infrastructure.mqtt;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;

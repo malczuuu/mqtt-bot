@@ -1,4 +1,4 @@
-package io.github.malczuuu.iot.bot.mqtt;
+package io.github.malczuuu.mqttbot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
