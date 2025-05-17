@@ -30,3 +30,25 @@ Predefined users:
 
 * `admin:admin` - for administration dashboard (http://localhost:15672/)
 * `user:user` - for MQTT connectivity (tcp://localhost:1883)
+
+To test the connection user `mosquitto-sub` and `mosquitto-pub` applications.
+
+> To install these applications make sure to install `mosquitto-clients`. Do not install `mosquitto` package as it will
+> install also [Mosquitto](https://github.com/eclipse-mosquitto/mosquitto) MQTT server which will conflict ports with
+> your RabbitMQ MQTT ports.
+>
+> ```bash
+> sudo apt-get install mosquitto-clients
+> ```
+
+1. In first terminal subscribe to any topic with `user:user` credentials.
+
+   ```bash
+   mosquitto_sub -h localhost -p 1883 -u user -P user -t topic/subtopic
+   ```
+
+2. In second terminal publish message to the subscribed topic with `user:user` credentials.
+
+   ```bash
+   mosquitto_pub -h localhost -p 1883 -t topic/subtopic/asd -u user -P user -m 'hello world'
+   ```
