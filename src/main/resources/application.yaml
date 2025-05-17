@@ -6,5 +6,5 @@ mqtt-client:
   enabled: false
   uri: tcp://localhost:1883
   username: user
-  password: password
-  ssl-validation: true
+  password: user
+  ssl-validation: false
