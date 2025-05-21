@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5"
@@ -32,7 +33,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
-    implementation("com.github.malczuuu:problem4j-spring-web:91c2499")
+    implementation("com.github.malczuuu:problem4j-spring-web:2bde0c8")
 }
 
 /**
