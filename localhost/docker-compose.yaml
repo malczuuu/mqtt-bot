@@ -10,3 +10,31 @@ services:
       - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+
+  mongo:
+    image: mongo:8.0.6-noble
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    ports:
+      - "127.0.0.1:27017:27017"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: |
+        echo "try { rs.status() } catch (err) { rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]}) }" | mongosh --port 27017 --quiet
+      # If used without 127.0.0.1 in ports configuration, and keeping extra_hosts configuration, it's allowed to use
+      # host.docker.internal instead of localhost. This way, the container is accessing mongodb using its external IP
+      # address, not internal.
+      # test: |
+      #   echo "try { rs.status() } catch (err) { rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - "mongo_data:/data/db"
+      - "mongo_config:/data/configdb"
+
+volumes:
+  mongo_data:
+  mongo_config:

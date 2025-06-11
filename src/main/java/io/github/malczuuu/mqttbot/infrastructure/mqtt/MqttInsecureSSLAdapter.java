@@ -10,9 +10,9 @@ import javax.net.ssl.X509TrustManager;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
-class MqttInsecureSSLAdapter {
+public class MqttInsecureSSLAdapter {
 
-  void apply(MqttConnectOptions options) throws MqttSecurityException {
+  public void apply(MqttConnectOptions options) throws MqttSecurityException {
     options.setSocketFactory(sslSocketFactoryWithoutSSLValidation());
   }
 
