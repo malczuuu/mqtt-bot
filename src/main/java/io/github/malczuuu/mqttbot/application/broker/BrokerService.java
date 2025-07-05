@@ -1,6 +1,8 @@
-package io.github.malczuuu.mqttbot.broker;
+package io.github.malczuuu.mqttbot.application.broker;
 
-import io.github.malczuuu.mqttbot.model.ContentModel;
+import io.github.malczuuu.mqttbot.application.model.ContentModel;
+import io.github.malczuuu.mqttbot.domain.BrokerEntity;
+import io.github.malczuuu.mqttbot.domain.BrokerRepository;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,8 @@ public class BrokerService {
         broker.getServerUri(),
         broker.getUsername(),
         broker.getPassword(),
-        broker.isSslVerificationEnabled());
+        broker.isSslVerificationEnabled(),
+        broker.getVersion());
   }
 
   public BrokerModel createBroker(BrokerCreateModel broker) {
@@ -44,7 +47,25 @@ public class BrokerService {
     return toBrokerModel(entity);
   }
 
-  public void updateBroker(String id, BrokerCreateModel broker) {
-    throw new RuntimeException("to be implemented");
+  public Optional<BrokerModel> updateBroker(String id, BrokerUpdateModel broker) {
+    Optional<BrokerEntity> optionalEntity = brokerRepository.findByUid(id);
+    if (optionalEntity.isEmpty()) {
+      return Optional.empty();
+    }
+
+    BrokerEntity entity = optionalEntity.get();
+    entity.setServerUri(broker.serverUri());
+    entity.setUsername(broker.username());
+    entity.setPassword(broker.password());
+    entity.setSslVerificationEnabled(broker.sslVerificationEnabled());
+    entity.setVersion(broker.version());
+
+    entity = brokerRepository.save(entity);
+
+    return Optional.of(toBrokerModel(entity));
+  }
+
+  public void deleteBroker(String id) {
+    brokerRepository.deleteByUid(id);
   }
 }

@@ -1,4 +1,4 @@
-package io.github.malczuuu.mqttbot.model;
+package io.github.malczuuu.mqttbot.application.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.github.malczuuu.mqttbot.model;
+package io.github.malczuuu.mqttbot.rest.exception;
 
 import io.github.malczuuu.problem4j.core.Problem;
 import io.github.malczuuu.problem4j.core.ProblemBuilder;

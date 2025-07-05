@@ -1,12 +1,13 @@
-package io.github.malczuuu.mqttbot.broker;
+package io.github.malczuuu.mqttbot.domain;
 
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "broker")
-public class BrokerEntity {
+public class BrokerEntity implements Broker {
 
   @MongoId(targetType = FieldType.OBJECT_ID)
   private String id;
@@ -26,6 +27,10 @@ public class BrokerEntity {
   @Field(name = "ssl_verification_enabled")
   private Boolean sslVerificationEnabled;
 
+  @Version
+  @Field(name = "version")
+  private Long version;
+
   public BrokerEntity() {}
 
   public BrokerEntity(
@@ -34,11 +39,24 @@ public class BrokerEntity {
       String username,
       String password,
       Boolean sslVerificationEnabled) {
+    this(null, uid, serverUri, username, password, sslVerificationEnabled, null);
+  }
+
+  public BrokerEntity(
+      String id,
+      String uid,
+      String serverUri,
+      String username,
+      String password,
+      Boolean sslVerificationEnabled,
+      Long version) {
+    this.id = id;
     this.uid = uid;
     this.serverUri = serverUri;
     this.username = username;
     this.password = password;
     this.sslVerificationEnabled = sslVerificationEnabled;
+    this.version = version;
   }
 
   public String getId() {
@@ -49,6 +67,7 @@ public class BrokerEntity {
     return uid;
   }
 
+  @Override
   public String getServerUri() {
     return serverUri;
   }
@@ -57,6 +76,7 @@ public class BrokerEntity {
     this.serverUri = serverUri;
   }
 
+  @Override
   public String getUsername() {
     return username;
   }
@@ -65,6 +85,7 @@ public class BrokerEntity {
     this.username = username;
   }
 
+  @Override
   public String getPassword() {
     return password;
   }
@@ -73,11 +94,20 @@ public class BrokerEntity {
     this.password = password;
   }
 
+  @Override
   public boolean isSslVerificationEnabled() {
     return sslVerificationEnabled == null || sslVerificationEnabled;
   }
 
   public void setSslVerificationEnabled(boolean sslVerificationEnabled) {
     this.sslVerificationEnabled = sslVerificationEnabled;
+  }
+
+  public Long getVersion() {
+    return version;
+  }
+
+  public void setVersion(Long version) {
+    this.version = version;
   }
 }

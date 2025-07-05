@@ -1,6 +1,5 @@
-package io.github.malczuuu.mqttbot.broker;
+package io.github.malczuuu.mqttbot.rest.exception;
 
-import io.github.malczuuu.mqttbot.model.NotFoundException;
 import io.github.malczuuu.problem4j.core.Problem;
 
 public class BrokerNotFoundException extends NotFoundException {
