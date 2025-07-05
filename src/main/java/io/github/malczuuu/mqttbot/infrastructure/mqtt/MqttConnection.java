@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttConnection {
 
@@ -42,7 +43,9 @@ public class MqttConnection {
   }
 
   private MqttClient connectMqttClient() throws MqttException {
-    MqttClient client = new MqttClient(broker.getServerUri(), UUID.randomUUID().toString());
+    MqttClient client =
+        new MqttClient(
+            broker.getServerUri(), UUID.randomUUID().toString(), new MemoryPersistence());
     MqttConnectOptions options = new MqttConnectOptions();
     options.setAutomaticReconnect(true);
     options.setCleanSession(true);
