@@ -34,3 +34,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### mosquitto_sub lock files ###
+.lck
