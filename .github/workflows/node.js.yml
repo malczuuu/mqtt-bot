@@ -13,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mqtt-bot-fe
 
     strategy:
       matrix:
@@ -26,9 +29,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-        with:
-          build-root-directory: mqtt-bot-fe
       - run: npm run build
-        with:
-          build-root-directory: mqtt-bot-fe
       # - run: npm test
