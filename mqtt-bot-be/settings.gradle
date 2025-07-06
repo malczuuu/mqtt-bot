@@ -4,4 +4,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "mqtt-bot"
+rootProject.name = "mqtt-bot-be"
