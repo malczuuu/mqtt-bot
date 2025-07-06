@@ -25,7 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          build-root-directory: mqtt-bot-fe
       - run: npm ci
+        with:
+          build-root-directory: mqtt-bot-fe
       - run: npm run build
+        with:
+          build-root-directory: mqtt-bot-fe
       # - run: npm test
