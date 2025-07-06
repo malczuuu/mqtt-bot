@@ -1,4 +1,4 @@
-name: Weekly Gradle Build
+name: Weekly Gradle CI
 
 on:
   # Every Sunday at midnight UTC

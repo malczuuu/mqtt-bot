@@ -1,10 +1,14 @@
-name: Gradle Build
+name: Gradle CI
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'mqtt-bot-be/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'mqtt-bot-be/**'
 
 jobs:
   build:
