@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "org.springframework.boot" version "3.5.3"
     id "io.spring.dependency-management" version "1.1.7"
-    id "com.github.sherter.google-java-format" version "0.9"
+    id "com.diffplug.spotless" version "6.25.0"
 }
 
 group = "io.github.malczuuu"
@@ -14,13 +14,16 @@ java {
     }
 }
 
-googleJavaFormat {
-    toolVersion = "1.27.0"
+spotless {
+    java {
+        googleJavaFormat("1.17.0") 
+        target "src/**/*.java"
+    }
 }
 
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io/" }
+    maven { url = "https://jitpack.io/" }
 }
 
 dependencies {
@@ -40,7 +43,7 @@ dependencies {
 }
 
 /**
- * There's no need for a plain JAR.
+ * There"s no need for a plain JAR.
  */
 tasks.named("jar") {
     setEnabled(false)
