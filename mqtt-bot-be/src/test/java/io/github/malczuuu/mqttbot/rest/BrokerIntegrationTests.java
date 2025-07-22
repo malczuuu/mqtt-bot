@@ -7,15 +7,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.malczuuu.mqttbot.application.broker.BrokerModel;
 import io.github.malczuuu.mqttbot.domain.BrokerEntity;
 import io.github.malczuuu.mqttbot.domain.BrokerRepository;
+import io.github.malczuuu.mqttbot.infrastructure.TestcontainersConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+@SpringBootTest
+@Import(TestcontainersConfiguration.class)
 @AutoConfigureMockMvc
-public class BrokerIntegrationTests extends AbstractIntegrationTests {
+public class BrokerIntegrationTests {
 
   @Autowired private MockMvc mvc;
 

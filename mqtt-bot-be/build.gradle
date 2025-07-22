@@ -36,6 +36,7 @@ dependencies {
 
     implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5"
 
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
