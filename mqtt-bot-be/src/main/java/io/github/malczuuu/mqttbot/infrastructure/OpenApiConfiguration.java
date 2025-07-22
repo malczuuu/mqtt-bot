@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfiguration {
 
+  /**
+   * It was observed, that the order of paths in OpenAPI documentation is not deterministic. This
+   * customizer sorts the paths alphabetically to ensure a consistent generated docs order.
+   */
   @Bean
   public OpenApiCustomizer openApiPathSorter() {
     return openApi -> {
