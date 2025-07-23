@@ -1,0 +1,39 @@
+.main-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .mat-drawer {
+    border-radius: 0;
+  }
+  .mat-mdc-list-item {
+    border-radius: 0;
+    &.active {
+      background-color: var(--mat-list-list-item-selected-state-layer-color);
+
+      &:hover {
+        background-color: var(--mat-sys-color-surface-container-high);
+      }
+    }
+  }
+}
+
+.sidenav {
+  width: 240px;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+
+mat-toolbar {
+  min-height: 64px;
+}
+
+.content {
+  padding: 20px;
+  height: calc(100vh - 64px); // Subtract toolbar height
+  overflow: auto;
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
