@@ -31,7 +31,7 @@ public class MessageService {
   public MessageModel createMessage(String brokerId, MessageCreateModel message) {
     MessageEntity entity =
         new MessageEntity(
-            UUID.randomUUID().toString().replace("-", ""),
+            UUID.randomUUID().toString(),
             brokerId,
             message.topic(),
             message.body(),

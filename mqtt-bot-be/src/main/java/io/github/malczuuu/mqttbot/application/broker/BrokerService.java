@@ -38,7 +38,7 @@ public class BrokerService {
   public BrokerModel createBroker(BrokerCreateModel broker) {
     BrokerEntity entity =
         new BrokerEntity(
-            UUID.randomUUID().toString().replace("-", ""),
+            UUID.randomUUID().toString(),
             broker.serverUri(),
             broker.username(),
             broker.password(),
