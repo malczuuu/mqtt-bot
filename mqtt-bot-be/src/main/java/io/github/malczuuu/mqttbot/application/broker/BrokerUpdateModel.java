@@ -10,8 +10,7 @@ public record BrokerUpdateModel(
     @JsonProperty("username") @Size(min = 1, max = 1024) String username,
     @JsonProperty("password") @Size(min = 1, max = 1024) String password,
     @JsonProperty("ssl_verification_enabled") Boolean sslVerificationEnabled,
-    @JsonProperty("version") @NotNull @Min(0) Long version)
-    implements BrokerModelAdapter {
+    @JsonProperty("version") @NotNull @Min(0) Long version) {
 
   public BrokerUpdateModel {
     if (sslVerificationEnabled == null) {

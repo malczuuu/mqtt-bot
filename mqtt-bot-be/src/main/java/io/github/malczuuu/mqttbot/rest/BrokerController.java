@@ -66,6 +66,7 @@ public class BrokerController {
   }
 
   @DeleteMapping(path = "/{brokerId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteBroker(@PathVariable("brokerId") String brokerId) {
     brokerService.deleteBroker(brokerId);
   }

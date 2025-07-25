@@ -30,7 +30,6 @@ public class BrokerService {
         broker.getUid(),
         broker.getServerUri(),
         broker.getUsername(),
-        broker.getPassword(),
         broker.isSslVerificationEnabled(),
         broker.getVersion());
   }
