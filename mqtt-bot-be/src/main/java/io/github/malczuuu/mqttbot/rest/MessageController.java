@@ -38,7 +38,7 @@ public class MessageController {
   }
 
   @GetMapping(path = "/{messageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public MessageModel getMessage(
+  public MessageModel getMessageById(
       @PathVariable("brokerId") String brokerId, @PathVariable("messageId") String messageId) {
     return messageService
         .findMessage(brokerId, messageId)
