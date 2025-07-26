@@ -3,12 +3,9 @@ package io.github.malczuuu.mqttbot.application.template;
 import io.github.malczuuu.mqttbot.application.model.ContentModel;
 import io.github.malczuuu.mqttbot.domain.TemplateEntity;
 import io.github.malczuuu.mqttbot.domain.TemplateRepository;
-
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.html.Option;
 
 @Service
 public class TemplateService {

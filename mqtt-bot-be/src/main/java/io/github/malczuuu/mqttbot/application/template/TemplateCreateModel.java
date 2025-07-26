@@ -5,6 +5,5 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record TemplateCreateModel(
-   @JsonProperty("name") @NotNull@Size(max = 256) String name,
-   @JsonProperty("template") @NotNull @Size(max = 2048) String template
-) {}
+    @JsonProperty("name") @NotNull @Size(max = 256) String name,
+    @JsonProperty("template") @NotNull @Size(max = 2048) String template) {}

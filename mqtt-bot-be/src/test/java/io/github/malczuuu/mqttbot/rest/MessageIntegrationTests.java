@@ -7,9 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.malczuuu.mqttbot.application.message.MessageModel;
 import io.github.malczuuu.mqttbot.domain.MessageEntity;
 import io.github.malczuuu.mqttbot.domain.MessageRepository;
-import java.time.Instant;
-
 import io.github.malczuuu.mqttbot.infrastructure.TestcontainersConfiguration;
+import java.time.Instant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

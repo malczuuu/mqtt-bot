@@ -7,13 +7,12 @@ import io.github.malczuuu.mqttbot.application.template.TemplateService;
 import io.github.malczuuu.mqttbot.application.template.TemplateUpdateModel;
 import io.github.malczuuu.mqttbot.rest.exception.TemplateNotFoundException;
 import jakarta.validation.Valid;
+import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/brokers/{brokerId}/templates")
