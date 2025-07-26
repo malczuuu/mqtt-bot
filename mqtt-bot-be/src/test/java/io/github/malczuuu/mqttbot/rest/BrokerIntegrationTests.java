@@ -1,8 +1,7 @@
 package io.github.malczuuu.mqttbot.rest;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -199,5 +198,123 @@ public class BrokerIntegrationTests {
     assertEquals(newBroker.sslVerificationEnabled(), entity.isSslVerificationEnabled());
     assertEquals(newBroker.password(), entity.getPassword());
     assertEquals(0L, entity.getVersion());
+  }
+
+  // TODO: Add test for creating broker with invalid data
+
+  @Test
+  void whenUpdatingBroker_shouldUpdateEntityInDatabase() throws Exception {
+    // given
+    BrokerEntity entity = entities.get(5);
+    BrokerModel requestBody =
+        new BrokerModel(
+            entity.getUid(), "tcp://updatedserver:1883", "updateduser", true, entity.getVersion());
+
+    // when
+    MvcResult result =
+        mvc.perform(
+                put("/api/brokers/{brokerId}", entity.getUid())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(requestBody)))
+            .andReturn();
+
+    // then
+    assertEquals(HttpStatus.NO_CONTENT.value(), result.getResponse().getStatus());
+
+    BrokerEntity updatedEntity = brokerRepository.findByUid(entity.getUid()).orElseThrow();
+    assertEquals(requestBody.serverUri(), updatedEntity.getServerUri());
+    assertEquals(requestBody.username(), updatedEntity.getUsername());
+    assertEquals(requestBody.sslVerificationEnabled(), updatedEntity.isSslVerificationEnabled());
+    assertEquals(requestBody.version() + 1, updatedEntity.getVersion());
+  }
+
+  @Test
+  void whenUpdatingNotExistingBroker_shouldReturnNotFound() throws Exception {
+    // given
+    BrokerModel requestBody =
+        new BrokerModel("NON_EXISTING_BROKER", "tcp://updatedserver:1883", "updateduser", true, 1L);
+
+    // when
+    MvcResult result =
+        mvc.perform(
+                put("/api/brokers/{brokerId}", "NON_EXISTING_BROKER")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(requestBody)))
+            .andReturn();
+
+    // then
+    assertEquals(HttpStatus.NOT_FOUND.value(), result.getResponse().getStatus());
+
+    Problem responseBody =
+        objectMapper.readValue(result.getResponse().getContentAsString(), Problem.class);
+
+    assertEquals(Problem.BLANK_TYPE, responseBody.getType());
+    assertEquals(HttpStatus.NOT_FOUND.value(), responseBody.getStatus());
+    assertEquals(HttpStatus.NOT_FOUND.getReasonPhrase(), responseBody.getTitle());
+    assertEquals("broker NON_EXISTING_BROKER not found", responseBody.getDetail());
+  }
+
+  @Test
+  void whenUpdatingBrokerWithInvalidVersion_shouldReturnConflict() throws Exception {
+    // given
+    BrokerEntity entity = entities.get(5);
+    BrokerModel requestBody =
+        new BrokerModel(
+            entity.getUid(),
+            "tcp://updatedserver:1883",
+            "updateduser",
+            true,
+            entity.getVersion() + 1);
+
+    // when
+    MvcResult result =
+        mvc.perform(
+                put("/api/brokers/{brokerId}", entity.getUid())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(requestBody)))
+            .andReturn();
+
+    // then
+    assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+    Problem responseBody =
+        objectMapper.readValue(result.getResponse().getContentAsString(), Problem.class);
+
+    assertEquals(Problem.BLANK_TYPE, responseBody.getType());
+    assertEquals(HttpStatus.CONFLICT.value(), responseBody.getStatus());
+    assertEquals(HttpStatus.CONFLICT.getReasonPhrase(), responseBody.getTitle());
+    assertEquals("version mismatch", responseBody.getDetail());
+  }
+
+  // TODO: Add test for updating broker with invalid data
+
+  @Test
+  void whenDeletingBroker_shouldRemoveEntityFromDatabase() throws Exception {
+    // given
+    BrokerEntity entity = entities.get(5);
+    assertTrue(brokerRepository.findByUid(entity.getUid()).isPresent());
+
+    // when
+    MvcResult result = mvc.perform(delete("/api/brokers/{brokerId}", entity.getUid())).andReturn();
+
+    // then
+    assertEquals(HttpStatus.NO_CONTENT.value(), result.getResponse().getStatus());
+
+    assertFalse(brokerRepository.findByUid(entity.getUid()).isPresent());
+  }
+
+  @Test
+  void whenDeletingNotExistingBroker_shouldReturnNoContentIgnoringNonExistence() throws Exception {
+    // given
+    String brokerId = "NON_EXISTING_BROKER";
+    assertFalse(brokerRepository.findByUid(brokerId).isPresent());
+
+    // when
+    MvcResult result = mvc.perform(delete("/api/brokers/{brokerId}", brokerId)).andReturn();
+
+    // then
+    assertEquals(HttpStatus.NO_CONTENT.value(), result.getResponse().getStatus());
+
+    assertFalse(brokerRepository.findByUid(brokerId).isPresent());
   }
 }
