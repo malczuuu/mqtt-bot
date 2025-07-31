@@ -6,6 +6,7 @@ import io.github.malczuuu.mqttbot.application.template.TemplateModel;
 import io.github.malczuuu.mqttbot.application.template.TemplateService;
 import io.github.malczuuu.mqttbot.application.template.TemplateUpdateModel;
 import io.github.malczuuu.mqttbot.rest.exception.TemplateNotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/brokers/{brokerId}/templates")
+@Tag(name = "messages")
 public class TemplateController {
 
   private final TemplateService templateService;
