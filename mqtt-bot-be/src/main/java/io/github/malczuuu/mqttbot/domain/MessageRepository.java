@@ -2,9 +2,12 @@ package io.github.malczuuu.mqttbot.domain;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.ListPagingAndSortingRepository;
 
-public interface MessageRepository extends MongoRepository<MessageEntity, String> {
+public interface MessageRepository
+    extends ListCrudRepository<MessageEntity, String>,
+        ListPagingAndSortingRepository<MessageEntity, String> {
 
   List<MessageEntity> findAllByBrokerUid(String brokerUid);
 
